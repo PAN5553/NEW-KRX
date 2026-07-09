@@ -22,7 +22,7 @@ HiveOS custom miner package for Keryx Miner KRX.
 
 ## Configuration
 
-`h-config.sh` supports a full custom config through the `CUSTOM_CONFIG` environment variable. If `CUSTOM_CONFIG` is not set, it creates `config.ini` from HiveOS values:
+`h-config.sh` supports a full custom config through the `CUSTOM_CONFIG_CONTENT` environment variable. If `CUSTOM_CONFIG_CONTENT` is not set, it creates `config.ini` from HiveOS values:
 
 - Pool: `CUSTOM_URL`, `CUSTOM_POOL`, or the default pool.
 - Wallet/template: `CUSTOM_TEMPLATE`, `CUSTOM_WALLET`, or `CUSTOM_USER`.
@@ -100,5 +100,5 @@ Start or restart the miner from HiveOS after applying the flight sheet.
 If miner API telemetry is unavailable, it returns safe defaults and uses HiveOS GPU telemetry where available. Output format:
 
 ```json
-{"hs":[0],"hs_units":"h/s","temp":[],"fan":[],"power":[],"ar":[0,0],"uptime":0,"algo":"keryxhash","coin":"KRX","ver":"0.1.4.7"}
+{"khs":[0],"hs":[0],"hs_total":0,"hs_units":"h/s","temp":[],"fan":[],"power":[],"ar":[0,0],"stats":{"accepted":0,"rejected":0,"hashrate_hs":0},"uptime":0,"algo":"keryxhash","coin":"KRX","ver":"0.1.4.7"}
 ```

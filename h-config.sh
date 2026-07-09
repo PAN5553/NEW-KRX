@@ -6,17 +6,17 @@ cd "$(dirname "$0")"
 source ./h-manifest.conf
 
 CONFIG_FILE="${CUSTOM_CONFIG_FILENAME:-config.ini}"
-POOL_DEFAULT="stratum+tcp://krx.suprnova.cc:4404"
+POOL_DEFAULT="${CUSTOM_URL:-stratum+tcp://krx.suprnova.cc:4404}"
 
-pool="${CUSTOM_URL:-${CUSTOM_POOL:-$POOL_DEFAULT}}"
+pool="${CUSTOM_POOL:-${CUSTOM_URL:-$POOL_DEFAULT}}"
 wallet="${CUSTOM_TEMPLATE:-${CUSTOM_WALLET:-${CUSTOM_USER:-}}}"
 password="${CUSTOM_PASS:-x}"
 worker="${CUSTOM_WORKER:-${WORKER_NAME:-${HOSTNAME:-hiveos}}}"
 api_port="${CUSTOM_API_PORT:-${CUSTOM_MINER_API_PORT:-4068}}"
 extra_args="${CUSTOM_USER_CONFIG:-}"
 
-if [[ -n "${CUSTOM_CONFIG:-}" ]]; then
-  printf '%s\n' "$CUSTOM_CONFIG" > "$CONFIG_FILE"
+if [[ -n "${CUSTOM_CONFIG_CONTENT:-}" ]]; then
+  printf '%s\n' "$CUSTOM_CONFIG_CONTENT" > "$CONFIG_FILE"
   exit 0
 fi
 

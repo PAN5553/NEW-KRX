@@ -20,6 +20,17 @@ EOF
   exit 1
 fi
 
+if command -v file >/dev/null 2>&1; then
+  binary_type="$(file -b "$BINARY_SOURCE")"
+  if ! printf '%s\n' "$binary_type" | grep -qi 'ELF'; then
+    cat >&2 <<EOF
+Miner binary is not a Linux ELF executable: ${BINARY_SOURCE}
+Detected type: ${binary_type}
+EOF
+    exit 1
+  fi
+fi
+
 rm -rf "$BUILD_DIR" "$ARCHIVE_NAME"
 mkdir -p "$BUILD_DIR"
 

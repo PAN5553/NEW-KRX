@@ -61,6 +61,20 @@ sum_numbers() {
   '
 }
 
+divide_by_1000() {
+  local input="${1:-}"
+  if [[ -z "$input" ]]; then
+    printf ''
+    return
+  fi
+  printf '%s\n' "$input" | awk '
+    $1 ~ /^-?[0-9]+([.][0-9]+)?$/ {
+      value = $1 / 1000
+      printf "%s\n", value
+    }
+  '
+}
+
 api_json=""
 for endpoint in "http://127.0.0.1:${API_PORT}/stats" "http://127.0.0.1:${API_PORT}/summary"; do
   if command -v curl >/dev/null 2>&1; then
@@ -117,6 +131,7 @@ fi
 [[ -z "$uptime_seconds" ]] && uptime_seconds="0"
 
 printf '{'
+printf '"khs":%s,' "$(json_number_array "$(divide_by_1000 "$hs_values")")"
 printf '"hs":%s,' "$(json_number_array "$hs_values")"
 printf '"hs_total":%s,' "$(sum_numbers "$hs_values")"
 printf '"hs_units":"h/s",'
@@ -124,6 +139,7 @@ printf '"temp":%s,' "$(json_number_array "$temps")"
 printf '"fan":%s,' "$(json_number_array "$fans")"
 printf '"power":%s,' "$(json_number_array "$powers")"
 printf '"ar":[%s,%s],' "$accepted" "$rejected"
+printf '"stats":{"accepted":%s,"rejected":%s,"hashrate_hs":%s},' "$accepted" "$rejected" "$(sum_numbers "$hs_values")"
 printf '"uptime":%s,' "$uptime_seconds"
 printf '"algo":"%s",' "$(json_escape "${CUSTOM_ALGO:-keryxhash}")"
 printf '"coin":"%s",' "$(json_escape "${CUSTOM_COIN:-KRX}")"

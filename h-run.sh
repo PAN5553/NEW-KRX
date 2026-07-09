@@ -20,4 +20,5 @@ fi
 ./h-config.sh
 
 echo "Starting ${CUSTOM_NAME} ${CUSTOM_VERSION} on ${CUSTOM_ALGO}" | tee -a "$LOG_FILE"
-exec "$MINER_BIN" --config "$CONFIG_FILE" 2>&1 | tee -a "$LOG_FILE"
+"$MINER_BIN" --config "$CONFIG_FILE" 2>&1 | tee -a "$LOG_FILE"
+exit "${PIPESTATUS[0]}"
