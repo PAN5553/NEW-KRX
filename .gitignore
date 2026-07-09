@@ -1,0 +1,6 @@
+keryx-miner
+*.tar.gz
+build/
+config.ini
+*.log
+*.tmp
