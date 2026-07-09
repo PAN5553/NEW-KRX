@@ -11,6 +11,7 @@ LOG_DIR="/var/log/miner"
 LOG_FILE="${LOG_DIR}/${CUSTOM_LOG_BASENAME:-keryx-miner}.log"
 
 mkdir -p "$LOG_DIR"
+export LD_LIBRARY_PATH="$(pwd):${LD_LIBRARY_PATH:-}"
 
 if [[ ! -x "$MINER_BIN" ]]; then
   echo "Miner binary not found or not executable: $MINER_BIN" | tee -a "$LOG_FILE" >&2

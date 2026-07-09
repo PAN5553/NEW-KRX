@@ -31,11 +31,14 @@ EOF
   fi
 fi
 
+BINARY_DIR="$(cd "$(dirname "$BINARY_SOURCE")" && pwd)"
+
 rm -rf "$BUILD_DIR" "$ARCHIVE_NAME"
 mkdir -p "$BUILD_DIR"
 
 cp h-manifest.conf h-config.sh h-run.sh h-stats.sh README.md "$BUILD_DIR"/
 cp "$BINARY_SOURCE" "$BUILD_DIR/${CUSTOM_MINER_BIN}"
+find "$BINARY_DIR" -maxdepth 1 -type f \( -name '*.so' -o -name '*.so.*' \) -exec cp {} "$BUILD_DIR"/ \;
 chmod +x "$BUILD_DIR"/h-config.sh "$BUILD_DIR"/h-run.sh "$BUILD_DIR"/h-stats.sh "$BUILD_DIR/${CUSTOM_MINER_BIN}"
 
 tar -C build -czf "$ARCHIVE_NAME" "$PACKAGE_NAME"
